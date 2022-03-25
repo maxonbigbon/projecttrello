@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div cdkDropListGroup class="row">
+    <div class="col-sm-4 col-sm-6 col-lg-3 mb-3" *ngFor="let column of boardService.getBoard$() | async">  <!-- почему бордсервис с маленькой а не с большой как работает async, вместе с behaviorsubjects?-->
+      
+      <!-- <h2>{{column.title}}</h2>
+      <hr> -->
+      <div class="d-flex justify-content-between align-items-center p-2 shadow-sm column-header">
+        <h2 class="m-0">{{column.title}}</h2>
+        <button mat-icon-button class="icon-delete" (click)="onDeleteColumn(column.id)">
+          <mat-icon style="font-size: 20px;">delete</mat-icon>
+        </button>
+      </div>
+      <app-dialog (emitTextTitle)="onAddCard($event,column.id)" [question]=" 'Add new card in '+ column.title + ' column' ">
+        <button mat-raised-button class="w-100 mb-1 btn-add">+</button>
+      </app-dialog>
+      <div 
+        class="example-list" 
+        cdkDropList 
+        [cdkDropListData]="column.list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-conteiner">
+          <div class="example-box" [ngStyle]="{background: column.color}" cdkDrag [cdkDragData]="item" *ngFor="let item of column.list">
+            <app-board-item 
+            (emitDeleteCard)="onDeleteCard($event,column.id)"
+            (emitText)="onAddComment($event, column.id)" 
+            (emitCardItem)="onChangeLike($event, column.id)" 
+            [item]="item">
+              <div *ngFor="let comment of item.comments">
+                <app-comment-item [comment]="comment" (emitComment)="onDeleteComment($event, column.id, item)"></app-comment-item>
+              </div>
+            </app-board-item><!--  если инпут декоратор не прописывать, будет работать? только с [item]="item" -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
