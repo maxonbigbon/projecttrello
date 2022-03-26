@@ -5,6 +5,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogModule } from '../components/dialog/dialog.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { DialogModule } from '../components/dialog/dialog.module';
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
-    DialogModule
+    DialogModule,
+    RouterModule
   ],
   exports: [
     HeaderComponent

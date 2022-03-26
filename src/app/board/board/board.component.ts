@@ -1,4 +1,3 @@
-import { IComments } from './../../types';
 import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { BoardService } from 'src/app/service/board.service';
@@ -33,18 +32,6 @@ export class BoardComponent implements OnInit {
   onDeleteCard(cardId: number,columnId:number){
     this.boardService.deleteCard(cardId, columnId)
   };
-
-  onChangeLike(event:{card:any,increase:boolean},columnId:number){
-    this.boardService.changeLike(event.card.id, columnId, event.increase)
-  };
-
-  onAddComment(event:{id:number,text:string},columnId:number){
-    this.boardService.addComment(columnId,event.id,event.text)
-
-  };
-  onDeleteComment(comment: IComments, columnId: number, item: IList){
-    this.boardService.deleteComment(columnId,item.id,comment.id)
-  }
 
   drop(event: CdkDragDrop<IList[]>) {
     if (event.previousContainer === event.container) {

@@ -3,8 +3,7 @@
       <span class="mat-h2">Trello Board</span>
     </div>
     <div>
-      <span class="mat-h2"><a routerLink="a" routerLinkActive="active-link">Список досок</a>
-      </span>
+      <button mat-raised-button class="w-100 mb-1 btn-add" routerLink="" routerLinkActive="active-link">Cписок досок</button>
     </div>
     <app-dialog (emitTextTitle)="onAddBoard($event)" [question]="'Add new board'">
       <button mat-raised-button class="w-100 mb-1 btn-add">Добавить доску</button>

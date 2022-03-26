@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { DialogModule } from '../components/dialog/dialog.module';
+import { ListBoardRoutingModule } from './list-board-routing.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { DialogModule } from '../components/dialog/dialog.module';
     MatButtonModule,
     MatIconModule,
     MatInputModule,
-    DialogModule
+    DialogModule,
+    ListBoardRoutingModule
   ],
   exports: [
     ListBoardComponent

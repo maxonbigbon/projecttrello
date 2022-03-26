@@ -6,6 +6,7 @@ import { BoardService } from 'src/app/service/board.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
+
 export class HeaderComponent implements OnInit {
 
   constructor(public boardService: BoardService) { }

@@ -1,113 +1,30 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { IBoard , ICard} from "../types";
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: "root"
 })
 
 export class BoardService{
-    private listsBoard: ICard[] = [
+    /* public activateRoute: ActivatedRoute */
+    private board: ICard[] = [
         {
             id: 1,
-            title: "Board"
+            title: "Board",
+            column: [
+                {id:1,
+                    title: 'To Do',
+                    list:[
+                        {
+                            id:1,
+                            text:'Example text from To Do'
+                        }
+                    ]}
+            ]
         }
     ];
-    private initBoard = [
-        {
-            id:1,
-            title: 'To Do',
-            color: '#e92c62',
-            list:[
-                {
-                    id:1,
-                    text:'Example text from To Do 1',
-                    like:4,
-                    comments:[
-                        {
-                            id:1,
-                            text:'Some comment from To Do 1 1/2'
-                        },
-                        {
-                            id:2,
-                            text:'Some comment from To Do 1 2/2'
-                        }
-                    ]
-                },
-                {
-                    id:2,
-                    text:'Example text from To Do 2',
-                    like:3,
-                    comments:[
-                        {
-                            id:1,
-                            text:'Some comment from To Do 2 1/3'
-                        },{
-                            id:2,
-                            text:'Some comment from To Do 2 2/3'
-                        },{
-                            id:3,
-                            text:'Some comment from To Do 2 3/3'
-                        }
-                    ]
-                }
-            ]
-
-
-        },
-        {
-            id:2,
-            title: 'Done',
-            color: '#e92c22',
-            list:[
-                {
-                    id:1,
-                    text:'Example text from Done',
-                    like:2,
-                    comments:[
-                        {
-                            id:1,
-                            text:'Some comment from Done 1/2'
-                        },
-                        {
-                            id:2,
-                            text:'Some comment from Done 2/2'
-                        }
-                    ]
-                }
-            ]
-
-
-        }
-    ];
-
-    addColumn(title: string){
-        const newColumn: any = {
-            id: Date.now(),
-            title: title,
-            color: '#e92c62',
-            list: []
-        };
-        this.board = [...this.board,newColumn]
-        this.board$.next([...this.board])
-    };
-
-    addCard(text: string, columnId: number){
-        const newCard: any = {
-            id: Date.now(),
-            text,
-            like: 0,
-            comments: []
-        };
-        this.board = this.board.map((column: IBoard) => {
-            if(column.id === columnId) {
-                column.list = [newCard,...column.list]
-            }
-            return column
-        });
-        this.board$.next([...this.board])
-            
-    };
 
     addCardBoard(title: string){
         const newCard: any = {
@@ -118,6 +35,33 @@ export class BoardService{
         this.listsBoard$.next([...this.listsBoard])
     };
 
+    addColumn(title: string){
+        const newColumn: any = {
+            id: Date.now(),
+            title: title,
+            color: '#e92c62',
+            list: []
+        };
+        this.listsBoard = [...this.listsBoard,newColumn]
+        this.listsBoard$.next([...this.listsBoard])
+    };
+
+    addCard(text: string, columnId: number){
+        const newCard: any = {
+            id: Date.now(),
+            text,
+            like: 0,
+            comments: []
+        };
+        this.listsBoard = this.listsBoard.map((column: any) => {
+            if(column.id === columnId) {
+                column.list = [newCard,...column.list]
+            }
+            return column
+        });
+        this.listsBoard$.next([...this.listsBoard])       
+    };
+
     deleteCardBoard(cardId: number){
         this.listsBoard = this.listsBoard.filter((card: any) => card.id !== cardId);
         this.listsBoard$.next([...this.listsBoard])
@@ -125,93 +69,28 @@ export class BoardService{
 
     deleteColumn(columnId: number){
         this.board = this.board.filter((column: any) => column.id !== columnId);
-        this.board$.next([...this.board])
+        this.listsBoard$.next([...this.listsBoard])
     };
 
     deleteCard(cardId:number, columnId:number){
-        this.board = this.board.map((column: IBoard) => {
+        this.listsBoard = this.listsBoard.map((column: any) => {
             if(column.id === columnId) {
                 column.list = column.list.filter((card:any) => card.id !== cardId);
             }
             return column
         });
-        this.board$.next([...this.board])
+        this.listsBoard$.next([...this.listsBoard])
     };
 
 
-    changeLike(cardId:number,columnId:number,increase:boolean){
-        this.board = this.board.map((column:any)=>{
-            if(column.id===columnId){
-                const list = column.list.map((card: any)=>{
-                    if(card.id===cardId){
-                        if(increase){
-                            ++card.like;
-                        }else{
-                            if(card.like>0){
-                                card.like--
-                            }
-                        }
-                    }
-                    return card
-                });
-            column.list = list /* начиная с отсюда непонятно */
-            return column
-            }else{
-                return column  
-            }
-
-        });
-        this.board$.next([...this.board])
-    }
-
-    addComment(columnId: number,cardId: number,text:string){
-        this.board = this.board.map((column:any)=>{
-            if(column.id === columnId){
-                const list = column.list.map((card: any)=>{
-                    if(card.id === cardId){
-                        const newComment = {
-                            id: Date.now(),
-                            text
-                        };
-                        card.comments = [newComment,...card.comments]
-                    };
-                    return card
-                });
-                column.list = list /* почему не возвращаем? если просто эту строчку не писать?*/
-            };
-            return column;
-        });
-        this.board$.next([...this.board])
-      }
-      
-
-    deleteComment(columnId: number, itemId: number, commentId: number) {
-        this.board = this.board.map((column) => {
-          if(column.id === columnId) {
-            const list = column.list.map((item)=> {
-              if(item.id === itemId) {
-                item.comments = item.comments.filter((comment) => {
-                  return comment.id !== commentId
-                })
-              }
-              return item
-            })
-            column.list = list
-          }
-          return column
-        })
-        this.board$.next([...this.board])
-      }
-
-
-    private board: IBoard[] = this.initBoard;  /* говорили про массивы, почему тут не в  массив запись ссылки */
-    private board$= new BehaviorSubject<IBoard[]>(this.initBoard);
-    getBoard$(){
-        return this.board$.asObservable() /* не понятно что такое эсобсервбл */
-    };
+    private listsBoard: ICard[] = this.board;
     private listsBoard$= new BehaviorSubject<ICard[]>(this.listsBoard);
     getListsBoard$(){
         return this.listsBoard$.asObservable()
     };
+    getBoard$(id:string){
+        this.listsBoard$.asObservable().pipe(map((v: ICard)=> {return v.find(i=>i.id === id)}))
+        return this.listsBoard$
+    }
 
 }

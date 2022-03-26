@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BoardComponent } from './board/board.component';
-import { BoardItemComponent } from './board-item/board-item.component';
+import { ListBoardComponent } from './list-board/list-board.component';
 
 const routes: Routes = [
     {
-        path: ':id',
-        component: BoardComponent
+        path: '',
+        component: ListBoardComponent
     }
 ];
 
@@ -14,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class BoardRoutingModule { }
+export class ListBoardRoutingModule { }

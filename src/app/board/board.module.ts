@@ -9,7 +9,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { BoardItemComponent } from './board-item/board-item.component';
-import { CommentItemComponent } from './comment-item/comment-item.component';
 import { BoardComponent } from './board/board.component';
 import { DialogModule } from '../components/dialog/dialog.module';
 import { BoardRoutingModule } from './board-routing.module';
@@ -18,8 +17,7 @@ import { BoardRoutingModule } from './board-routing.module';
 @NgModule({
   declarations: [
     BoardComponent,
-    BoardItemComponent,
-    CommentItemComponent
+    BoardItemComponent
   ],
   imports: [
     CommonModule,
