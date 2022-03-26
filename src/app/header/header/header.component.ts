@@ -12,6 +12,12 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  onAddBoard(event: string){
+    if(event) {
+      this.boardService.addCardBoard(event)
+    }
+  }
   
   onAddColumn(event: string){
     if(event) {

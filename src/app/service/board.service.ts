@@ -1,12 +1,18 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { IBoard } from "../types";
+import { IBoard , ICard} from "../types";
 
 @Injectable({
     providedIn: "root"
 })
 
 export class BoardService{
+    private listsBoard: ICard[] = [
+        {
+            id: 1,
+            title: "Board"
+        }
+    ];
     private initBoard = [
         {
             id:1,
@@ -103,6 +109,20 @@ export class BoardService{
             
     };
 
+    addCardBoard(title: string){
+        const newCard: any = {
+            id: Date.now(),
+            title: title
+        };
+        this.listsBoard = [...this.listsBoard,newCard]
+        this.listsBoard$.next([...this.listsBoard])
+    };
+
+    deleteCardBoard(cardId: number){
+        this.listsBoard = this.listsBoard.filter((card: any) => card.id !== cardId);
+        this.listsBoard$.next([...this.listsBoard])
+    };
+
     deleteColumn(columnId: number){
         this.board = this.board.filter((column: any) => column.id !== columnId);
         this.board$.next([...this.board])
@@ -188,6 +208,10 @@ export class BoardService{
     private board$= new BehaviorSubject<IBoard[]>(this.initBoard);
     getBoard$(){
         return this.board$.asObservable() /* не понятно что такое эсобсервбл */
+    };
+    private listsBoard$= new BehaviorSubject<ICard[]>(this.listsBoard);
+    getListsBoard$(){
+        return this.listsBoard$.asObservable()
     };
 
 }

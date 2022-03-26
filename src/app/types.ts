@@ -14,3 +14,7 @@ export interface IComments{
     id: number;
     text: string;
   }
+export interface ICard{
+    id: number;
+    title: string;
+  }

@@ -2,7 +2,14 @@
     <div>
       <span class="mat-h2">Trello Board</span>
     </div>
+    <div>
+      <span class="mat-h2"><a routerLink="/" routerLinkActive="active-link">Список досок</a>
+      </span>
+    </div>
+    <app-dialog (emitTextTitle)="onAddBoard($event)" [question]="'Add new board'">
+      <button mat-raised-button class="w-100 mb-1 btn-add">Добавить доску</button>
+    </app-dialog>
     <app-dialog (emitTextTitle)="onAddColumn($event)" [question]="'Add new column'">
-      <button mat-raised-button class="w-100 mb-1 btn-add">+</button>
+      <button mat-raised-button class="w-100 mb-1 btn-add">Добавить карточку</button>
     </app-dialog>
   </mat-toolbar>
