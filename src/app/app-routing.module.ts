@@ -6,27 +6,17 @@ import { BoardComponent } from './board/board/board.component';
 
 const routes: Routes = [
   {
-    path: '', component: ListBoardComponent
-  },
-  {
-    path: 'cards', component: BoardComponent
-  },
-  {
-    path: '**',
-    component: NotFoundComponent
-  }
-  /* {
     path: '',
     loadChildren: () => import('./list-board/list-board.module').then(m => m.ListBoardModule),
   },
   {
-    path: '/cards',
+    path: 'b',
     loadChildren: () => import('./board/board.module').then(m => m.BoardModule),
   },
   {
     path: '**',
     component: NotFoundComponent
-  } */
+  }
 ];
 
 @NgModule({

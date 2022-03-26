@@ -12,6 +12,7 @@ import { BoardItemComponent } from './board-item/board-item.component';
 import { CommentItemComponent } from './comment-item/comment-item.component';
 import { BoardComponent } from './board/board.component';
 import { DialogModule } from '../components/dialog/dialog.module';
+import { BoardRoutingModule } from './board-routing.module';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { DialogModule } from '../components/dialog/dialog.module';
     DragDropModule,
     MatExpansionModule,
     FormsModule,
-    DialogModule
+    DialogModule,
+    BoardRoutingModule
   ],
   exports: [
     BoardComponent    /* почему экспортируем только боардкомпонент */
