@@ -2,13 +2,19 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { IBoard , ICard} from "../types";
 import { map } from 'rxjs/operators';
+import { ActivatedRoute } from "@angular/router";
 
 @Injectable({
     providedIn: "root"
 })
 
 export class BoardService{
-    /* public activateRoute: ActivatedRoute */
+
+    /* id: string;
+    constructor(public activateRoute: ActivatedRoute){
+         
+        this.id = activateRoute.snapshot.params['id'];
+    } */
     private board: ICard[] = [
         {
             id: 1,
@@ -35,23 +41,23 @@ export class BoardService{
         this.listsBoard$.next([...this.listsBoard])
     };
 
-    addColumn(title: string){
+    addColumn(title: string, id: string){
+        console.log(id)
         const newColumn: any = {
             id: Date.now(),
             title: title,
-            color: '#e92c62',
             list: []
         };
-        this.listsBoard = [...this.listsBoard,newColumn]
+        const findBoardIndex = this.listsBoard.findIndex(board => board.id.toString()=== id);
+        this.listsBoard[findBoardIndex].column = [...this.listsBoard[findBoardIndex].column, newColumn]
         this.listsBoard$.next([...this.listsBoard])
     };
+
 
     addCard(text: string, columnId: number){
         const newCard: any = {
             id: Date.now(),
-            text,
-            like: 0,
-            comments: []
+            text
         };
         this.listsBoard = this.listsBoard.map((column: any) => {
             if(column.id === columnId) {
@@ -89,8 +95,13 @@ export class BoardService{
         return this.listsBoard$.asObservable()
     };
     getBoard$(id:string){
-        this.listsBoard$.asObservable().pipe(map((v: ICard)=> {return v.find(i=>i.id === id)}))
-        return this.listsBoard$
+        return this.listsBoard$.asObservable()
+        .pipe(
+            map((listsBoard: ICard[])=>{
+                const findElement = listsBoard.find(board=> board.id.toString()===id)
+                return findElement ? findElement.column:[]
+            })
+        )
     }
 
 }

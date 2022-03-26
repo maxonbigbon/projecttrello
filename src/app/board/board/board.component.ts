@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { BoardService } from 'src/app/service/board.service';
 import { IBoard,IList } from 'src/app/types';
+import { ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-board',
@@ -11,14 +12,10 @@ import { IBoard,IList } from 'src/app/types';
 export class BoardComponent implements OnInit {
 
   constructor(
-    public boardService: BoardService  /* как тут используем конструктор? */
-  ) {
+    public boardService: BoardService ,
+    public activateRoute: ActivatedRoute ){
+    }
 
-  }
-/*   onChangeLike(event:{card:any,increase:boolean},columnId:number){
-    const {card:{id},increase} = event
-    this.boardService.changeLike(id, columnId, increase)
-  }; */
   onAddCard(text: string ,columnId:number){
     if(text) {
       this.boardService.addCard(text, columnId)

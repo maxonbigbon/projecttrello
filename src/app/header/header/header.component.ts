@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from 'src/app/service/board.service';
+import { ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,9 @@ import { BoardService } from 'src/app/service/board.service';
 
 export class HeaderComponent implements OnInit {
 
-  constructor(public boardService: BoardService) { }
+  constructor(public boardService: BoardService,
+              public activateRoute: ActivatedRoute
+    ) { }
 
   ngOnInit(): void {
   }
@@ -22,7 +25,7 @@ export class HeaderComponent implements OnInit {
   
   onAddColumn(event: string){
     if(event) {
-      this.boardService.addColumn(event)
+      this.boardService.addColumn(event,this.activateRoute.snapshot.params['id'])
     }
   }
 }
