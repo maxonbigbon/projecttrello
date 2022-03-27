@@ -14,6 +14,10 @@ export class HeaderComponent implements OnInit {
               public activateRoute: ActivatedRoute
     ) { }
 
+  get hiddenBoard(): boolean {
+    return window.location.pathname === '/'
+  };
+
   ngOnInit(): void {
   }
 
@@ -25,7 +29,8 @@ export class HeaderComponent implements OnInit {
   
   onAddColumn(event: string){
     if(event) {
-      this.boardService.addColumn(event,this.activateRoute.snapshot.params['id'])
+      const id = window.location.pathname.replace('/b/','')
+      this.boardService.addColumn(event,id)
     }
   }
 }

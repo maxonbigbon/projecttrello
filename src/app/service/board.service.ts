@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { IBoard , ICard} from "../types";
+import { IBoard , ICard , IList} from "../types";
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from "@angular/router";
 
@@ -16,26 +16,14 @@ export class BoardService{
         this.id = activateRoute.snapshot.params['id'];
     } */
     private board: ICard[] = [
-        {
-            id: 1,
-            title: "Board",
-            column: [
-                {id:1,
-                    title: 'To Do',
-                    list:[
-                        {
-                            id:1,
-                            text:'Example text from To Do'
-                        }
-                    ]}
-            ]
-        }
+        
     ];
 
     addCardBoard(title: string){
         const newCard: any = {
             id: Date.now(),
-            title: title
+            title: title,
+            column:[]
         };
         this.listsBoard = [...this.listsBoard,newCard]
         this.listsBoard$.next([...this.listsBoard])
@@ -54,16 +42,21 @@ export class BoardService{
     };
 
 
-    addCard(text: string, columnId: number){
+    addCard(text: string, columnId: number, id: string){
         const newCard: any = {
             id: Date.now(),
             text
         };
-        this.listsBoard = this.listsBoard.map((column: any) => {
-            if(column.id === columnId) {
-                column.list = [newCard,...column.list]
+        this.listsBoard = this.listsBoard.map((board:ICard)=>{
+            if(board.id.toString()===id){
+                board.column = board.column.map((card)=>{
+                    if(card.id===columnId){
+                        card.list = [...card.list,newCard]
+                    }
+                    return card
+                })
             }
-            return column
+                return board
         });
         this.listsBoard$.next([...this.listsBoard])       
     };
@@ -73,17 +66,28 @@ export class BoardService{
         this.listsBoard$.next([...this.listsBoard])
     };
 
-    deleteColumn(columnId: number){
-        this.board = this.board.filter((column: any) => column.id !== columnId);
+    deleteColumn(boardId: string, columnId: number){
+        this.listsBoard = this.listsBoard.map((board: any) => {
+            if(board.id.toString() === boardId) {
+                board.column = board.column.filter((column:any) => column.id !== columnId);
+            }
+            return board
+        });
         this.listsBoard$.next([...this.listsBoard])
     };
 
-    deleteCard(cardId:number, columnId:number){
-        this.listsBoard = this.listsBoard.map((column: any) => {
-            if(column.id === columnId) {
-                column.list = column.list.filter((card:any) => card.id !== cardId);
+    deleteCard(boardId: string, cardId:number, columnId:number){
+        this.listsBoard = this.listsBoard.map((board: any) => {
+            if(board.id.toString() === boardId) {
+                board.column = board.column.map((column:any) =>{
+                    if(column.id===columnId){
+                        column.list = column.list.filter((card:any) => card.id !== cardId);
+                    }
+                    return column    
+                }); 
+                
             }
-            return column
+            return board
         });
         this.listsBoard$.next([...this.listsBoard])
     };

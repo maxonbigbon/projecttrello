@@ -18,16 +18,16 @@ export class BoardComponent implements OnInit {
 
   onAddCard(text: string ,columnId:number){
     if(text) {
-      this.boardService.addCard(text, columnId)
+      this.boardService.addCard(text, columnId, this.activateRoute.snapshot.params['id'])
     }
   };
 
   onDeleteColumn(columnId:number){
-    this.boardService.deleteColumn(columnId)
+    this.boardService.deleteColumn(this.activateRoute.snapshot.params['id'],columnId);
   };
 
   onDeleteCard(cardId: number,columnId:number){
-    this.boardService.deleteCard(cardId, columnId)
+    this.boardService.deleteCard(this.activateRoute.snapshot.params['id'],cardId, columnId)
   };
 
   drop(event: CdkDragDrop<IList[]>) {

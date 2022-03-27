@@ -7,7 +7,7 @@
           <mat-icon style="font-size: 20px;">delete</mat-icon>
         </button>
       </div>
-      <app-dialog (emitTextTitle)="onAddCard($event,column.id)" [question]=" 'Add new card in '+ column.title + ' column' ">
+      <app-dialog (emitTextTitle)="onAddCard($event,column.id)" [question]=" 'Новая карточка в '+ column.title + ' колонку' ">
         <button mat-raised-button class="w-100 mb-1 btn-add">+</button>
       </app-dialog>
       <div 

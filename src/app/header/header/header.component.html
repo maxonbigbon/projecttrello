@@ -1,14 +1,14 @@
-<mat-toolbar  class="shadow justify-content-between px-5 mb-4">
+<mat-toolbar  class="shadow justify-content-between px-5 mb-5">
     <div>
       <span class="mat-h2">Trello Board</span>
     </div>
     <div>
       <button mat-raised-button class="w-100 mb-1 btn-add" routerLink="" routerLinkActive="active-link">Cписок досок</button>
     </div>
-    <app-dialog (emitTextTitle)="onAddBoard($event)" [question]="'Add new board'">
-      <button mat-raised-button class="w-100 mb-1 btn-add">Добавить доску</button>
+    <app-dialog (emitTextTitle)="onAddBoard($event)" [question]="'Новая доска'">
+      <button mat-raised-button class="w-100 mb-1 btn-add" *ngIf="hiddenBoard">Добавить доску</button>
     </app-dialog>
-    <app-dialog (emitTextTitle)="onAddColumn($event)" [question]="'Add new column'">
-      <button mat-raised-button class="w-100 mb-1 btn-add">Добавить карточку</button>
+    <app-dialog (emitTextTitle)="onAddColumn($event)" [question]="'Новая колонка'">
+      <button mat-raised-button class="w-100 mb-1 btn-add" *ngIf="!hiddenBoard">Добавить колонку</button>
     </app-dialog>
   </mat-toolbar>
