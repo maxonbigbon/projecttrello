@@ -1,14 +1,14 @@
 export interface IBoard {
     id: number;
     title: string;
-    list: IList[];
+    lists: IList[];
   }
 export interface IList{
     id: number;
     text: string;
   }
-export interface ICard{
+export interface ICardBoard{
     id: number;
     title: string;
-    column: IBoard[]
+    columns: IBoard[]
   }

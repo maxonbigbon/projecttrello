@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BoardService } from 'src/app/service/board.service';
+/* import { BoardService } from 'src/app/service/board.service'; */
 import { ActivatedRoute} from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppAction } from 'src/app/_store/actions';
 
 @Component({
   selector: 'app-header',
@@ -10,8 +12,9 @@ import { ActivatedRoute} from '@angular/router';
 
 export class HeaderComponent implements OnInit {
 
-  constructor(public boardService: BoardService,
-              public activateRoute: ActivatedRoute
+  constructor(
+              public activateRoute: ActivatedRoute,
+              private store: Store
     ) { }
 
   get hiddenBoard(): boolean {
@@ -22,15 +25,11 @@ export class HeaderComponent implements OnInit {
   }
 
   onAddBoard(event: string){
-    if(event) {
-      this.boardService.addCardBoard(event)
-    }
+    this.store.dispatch(AppAction.addCardBoard({text: event}));
   }
   
   onAddColumn(event: string){
-    if(event) {
-      const id = window.location.pathname.replace('/b/','')
-      this.boardService.addColumn(event,id)
-    }
+    const id = window.location.pathname.replace('/b/','')
+    this.store.dispatch(AppAction.addColumn({cardId: id,text: event}))
   }
 }

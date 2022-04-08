@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+/* import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { IBoard , ICard , IList} from "../types";
 import { map } from 'rxjs/operators';
@@ -8,14 +8,14 @@ import { ActivatedRoute } from "@angular/router";
     providedIn: "root"
 })
 
-export class BoardService{
+export class BoardService{ */
 
     /* id: string;
     constructor(public activateRoute: ActivatedRoute){
          
         this.id = activateRoute.snapshot.params['id'];
     } */
-    private board: ICard[] = [
+    /* private board: ICard[] = [
         
     ];
 
@@ -30,7 +30,6 @@ export class BoardService{
     };
 
     addColumn(title: string, id: string){
-        console.log(id)
         const newColumn: any = {
             id: Date.now(),
             title: title,
@@ -108,4 +107,4 @@ export class BoardService{
         )
     }
 
-}
+} */
